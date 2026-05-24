@@ -4,7 +4,8 @@ Personal portfolio website for Karri Prasad, Senior Data Engineer.
 
 ## 🚀 Live Site
 
-Hosted on GitHub Pages: `https://<your-username>.github.io/<repo-name>/`
+Hosted on GitHub Pages: `https://<hyam-karri.github.io/karri-prasad-portfolio
+/`
 
 ## 🛠 Tech Stack
 
