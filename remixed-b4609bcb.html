@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Karri Prasad — AI Engineer | Data Engineer | Cloud Data Architect | DevOps</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #07080d;
+      --bg2: #0c0e17;
+      --surface: #11141f;
+      --border: rgba(255,255,255,0.06);
+      --accent: #00e5ff;
+      --accent2: #7c5cfc;
+      --accent3: #ff6b6b;
+      --text: #e8eaf0;
+      --muted: #6b7280;
+      --card: #0f1120;
+      --green: #00ff88;
+    }
+    html { scroll-behavior: smooth; }
+    body { background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden;cursor:none; }
+    .cursor { width:10px;height:10px;background:var(--accent);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:screen; }
+    .cursor-ring { width:36px;height:36px;border:1.5px solid rgba(0,229,255,0.5);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all 0.15s ease; }
+    #particles-canvas { position:fixed;inset:0;z-index:0;pointer-events:none; }
+    nav { position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.25rem 3rem;background:rgba(7,8,13,0.7);backdrop-filter:blur(20px);border-bottom:1px solid var(--border); }
+    .nav-logo { font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;letter-spacing:0.05em;color:var(--text);text-decoration:none; }
+    .nav-logo span { color:var(--accent); }
+    .nav-links { display:flex;gap:2rem;list-style:none; }
+    .nav-links a { color:var(--muted);text-decoration:none;font-size:0.83rem;font-family:'DM Mono',monospace;letter-spacing:0.08em;transition:color 0.2s; }
+    .nav-links a:hover { color:var(--accent); }
+    section { position:relative;z-index:1; }
+    .grid-overlay { position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,0.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.015) 1px,transparent 1px);background-size:60px 60px; }
+    .orb { position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0; }
+    .orb-1 { width:500px;height:500px;top:-150px;right:-100px;background:radial-gradient(circle,rgba(124,92,252,0.12),transparent 70%); }
+    .orb-2 { width:400px;height:400px;bottom:20%;left:-100px;background:radial-gradient(circle,rgba(0,229,255,0.08),transparent 70%); }
+
+    /* HERO */
+    #hero { min-height:100vh;display:flex;align-items:center;padding:7rem 3rem 4rem;position:relative; }
+    .hero-inner { max-width:1200px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 420px;gap:4rem;align-items:center; }
+    .hero-eyebrow { font-family:'DM Mono',monospace;font-size:0.8rem;letter-spacing:0.2em;color:var(--accent);text-transform:uppercase;margin-bottom:1.5rem;opacity:0;animation:fadeUp 0.8s ease 0.2s forwards; }
+    .hero-name { font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(3rem,6vw,5.5rem);line-height:1;letter-spacing:-0.03em;margin-bottom:0.5rem;opacity:0;animation:fadeUp 0.8s ease 0.4s forwards; }
+    .hero-name .line2 { display:block;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,0.2); }
+    .hero-title { font-family:'DM Mono',monospace;font-size:0.88rem;color:var(--muted);margin-bottom:2rem;opacity:0;animation:fadeUp 0.8s ease 0.6s forwards; }
+    .hero-title .hl { color:var(--accent2); }
+    .hero-summary { max-width:520px;font-size:0.95rem;color:rgba(232,234,240,0.65);line-height:1.75;margin-bottom:3rem;opacity:0;animation:fadeUp 0.8s ease 0.8s forwards; }
+    .hero-cta { display:flex;gap:1rem;flex-wrap:wrap;opacity:0;animation:fadeUp 0.8s ease 1s forwards; }
+    .btn-primary { padding:0.75rem 1.75rem;background:var(--accent);color:#07080d;font-family:'DM Mono',monospace;font-size:0.8rem;letter-spacing:0.1em;font-weight:500;text-decoration:none;border:none;cursor:none;transition:all 0.2s;clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px)); }
+    .btn-primary:hover { background:#fff;box-shadow:0 0 30px rgba(0,229,255,0.3); }
+    .btn-outline { padding:0.75rem 1.75rem;background:transparent;color:var(--text);font-family:'DM Mono',monospace;font-size:0.8rem;letter-spacing:0.1em;text-decoration:none;border:1px solid var(--border);cursor:none;transition:all 0.2s; }
+    .btn-outline:hover { border-color:var(--accent);color:var(--accent); }
+    .hero-stats { display:flex;gap:3rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);opacity:0;animation:fadeUp 0.8s ease 1.2s forwards; }
+    .stat-value { font-family:'Syne',sans-serif;font-weight:800;font-size:2rem;color:var(--accent); }
+    .stat-label { font-size:0.7rem;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:0.05em;margin-top:0.2rem; }
+
+    /* AVATAR CARD */
+    .avatar-card { background:var(--card);border:1px solid var(--border);border-radius:20px;padding:1.75rem;position:relative;overflow:hidden;opacity:0;animation:fadeUp 0.8s ease 0.6s forwards; }
+    .avatar-card::before { content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--green)); }
+    .avatar-top { display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem; }
+    .avatar-visual { width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#0c1a2e,#1a0c2e);border:2px solid rgba(0,229,255,0.3);position:relative;flex-shrink:0;overflow:hidden; }
+    .avatar-canvas { width:72px;height:72px;border-radius:50%; }
+    .avatar-status { position:absolute;bottom:4px;right:4px;width:12px;height:12px;background:var(--green);border-radius:50%;border:2px solid var(--card);animation:pulse-dot 2s ease infinite; }
+    .avatar-name { font-family:'Syne',sans-serif;font-weight:700;font-size:1rem; }
+    .avatar-role { font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--muted);margin-top:0.15rem; }
+    .avatar-badge { display:inline-flex;align-items:center;gap:0.4rem;padding:0.2rem 0.6rem;background:rgba(0,229,255,0.08);border:1px solid rgba(0,229,255,0.2);border-radius:20px;font-family:'DM Mono',monospace;font-size:0.63rem;color:var(--accent);margin-top:0.4rem; }
+    .avatar-badge::before { content:'';width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse-dot 2s ease infinite; }
+    .chat-area { height:240px;overflow-y:auto;display:flex;flex-direction:column;gap:0.6rem;margin-bottom:1rem;padding-right:0.25rem; }
+    .chat-area::-webkit-scrollbar { width:3px; }
+    .chat-area::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.1);border-radius:2px; }
+    .msg { max-width:90%;font-size:0.82rem;line-height:1.5;padding:0.6rem 0.85rem;border-radius:12px; }
+    .msg-ai { background:rgba(0,229,255,0.08);border:1px solid rgba(0,229,255,0.12);color:rgba(232,234,240,0.9);align-self:flex-start;border-radius:4px 12px 12px 12px; }
+    .msg-user { background:rgba(124,92,252,0.15);border:1px solid rgba(124,92,252,0.2);color:rgba(232,234,240,0.9);align-self:flex-end;border-radius:12px 4px 12px 12px; }
+    .typing-dots { display:inline-flex;gap:4px;padding:0.6rem 0.85rem; }
+    .typing-dots span { width:6px;height:6px;background:var(--accent);border-radius:50%;animation:blink 1.2s ease infinite; }
+    .typing-dots span:nth-child(2) { animation-delay:0.2s; }
+    .typing-dots span:nth-child(3) { animation-delay:0.4s; }
+    .quick-qs { display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:0.85rem; }
+    .quick-q { font-family:'DM Mono',monospace;font-size:0.63rem;padding:0.3rem 0.65rem;background:rgba(255,255,255,0.04);border:1px solid var(--border);color:var(--muted);border-radius:20px;cursor:none;transition:all 0.2s; }
+    .quick-q:hover { border-color:var(--accent);color:var(--accent);background:rgba(0,229,255,0.06); }
+    .chat-input-row { display:flex;gap:0.5rem; }
+    .chat-input { flex:1;background:rgba(255,255,255,0.04);border:1px solid var(--border);color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.8rem;padding:0.55rem 0.85rem;border-radius:8px;outline:none;transition:border-color 0.2s;cursor:text; }
+    .chat-input:focus { border-color:rgba(0,229,255,0.3); }
+    .chat-input::placeholder { color:var(--muted); }
+    .chat-send { width:36px;height:36px;background:var(--accent);border:none;border-radius:8px;cursor:none;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0; }
+    .chat-send:hover { background:#fff; }
+    .chat-send svg { width:14px;height:14px; }
+
+    /* MARQUEE */
+    .marquee-wrap { background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;padding:1rem 0; }
+    .marquee-track { display:flex;gap:0;white-space:nowrap;animation:marquee 35s linear infinite; }
+    .marquee-item { display:inline-flex;align-items:center;gap:1rem;padding:0 2rem;font-family:'DM Mono',monospace;font-size:0.75rem;letter-spacing:0.1em;color:var(--muted);text-transform:uppercase; }
+    .marquee-item .dot { width:4px;height:4px;border-radius:50%;background:var(--accent); }
+
+    /* SECTIONS */
+    .section-label { font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.3em;color:var(--accent);text-transform:uppercase;margin-bottom:1rem; }
+    .section-title { font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2rem,4vw,3.2rem);letter-spacing:-0.02em;margin-bottom:3rem;line-height:1.1; }
+
+    /* ABOUT */
+    #about { padding:7rem 3rem;max-width:1200px;margin:0 auto; }
+    .about-grid { display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start; }
+    .about-text { font-size:0.95rem;color:rgba(232,234,240,0.7);line-height:1.8; }
+    .about-text p + p { margin-top:1.25rem; }
+    .cert-list { display:flex;flex-direction:column;gap:0.6rem; }
+    .cert-item { display:flex;align-items:flex-start;gap:1rem;padding:0.85rem 1.1rem;background:var(--card);border:1px solid var(--border);border-left:3px solid var(--accent2);transition:all 0.2s; }
+    .cert-item:hover { border-left-color:var(--accent);transform:translateX(4px); }
+    .cert-icon { font-size:1.1rem;flex-shrink:0; }
+    .cert-name { font-family:'DM Mono',monospace;font-size:0.73rem;color:var(--text);line-height:1.4; }
+    .cert-meta { font-size:0.67rem;color:var(--muted);margin-top:0.15rem; }
+
+    /* AI SECTION */
+    #ai { padding:7rem 3rem;background:var(--bg2); }
+    .ai-inner { max-width:1200px;margin:0 auto; }
+    .ai-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.5rem;margin-top:3rem; }
+    .ai-card { background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.75rem;position:relative;overflow:hidden;opacity:0;transform:translateY(20px);transition:opacity 0.5s,transform 0.5s,border-color 0.2s; }
+    .ai-card.visible { opacity:1;transform:translateY(0); }
+    .ai-card:hover { border-color:rgba(0,255,136,0.3); }
+    .ai-card::before { content:'';position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,var(--green),var(--accent2));transform:scaleX(0);transform-origin:left;transition:transform 0.3s; }
+    .ai-card:hover::before { transform:scaleX(1); }
+    .ai-card-tag { display:inline-flex;align-items:center;gap:0.4rem;font-family:'DM Mono',monospace;font-size:0.63rem;padding:0.25rem 0.65rem;background:rgba(0,255,136,0.08);border:1px solid rgba(0,255,136,0.2);color:var(--green);border-radius:20px;margin-bottom:1rem; }
+    .ai-card-tag .dot { width:5px;height:5px;background:var(--green);border-radius:50%; }
+    .ai-card-title { font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:0.3rem; }
+    .ai-card-company { font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--muted);margin-bottom:1rem; }
+    .ai-card-desc { font-size:0.84rem;color:rgba(232,234,240,0.65);line-height:1.65;margin-bottom:1.25rem; }
+    .ai-card-stack { display:flex;flex-wrap:wrap;gap:0.4rem; }
+    .ai-tag { font-family:'DM Mono',monospace;font-size:0.63rem;padding:0.25rem 0.55rem;background:rgba(124,92,252,0.1);border:1px solid rgba(124,92,252,0.2);color:var(--accent2);border-radius:4px; }
+
+    /* EXPERIENCE */
+    #experience { padding:7rem 3rem;background:var(--surface); }
+    .exp-inner { max-width:1200px;margin:0 auto; }
+    .exp-timeline { display:flex;flex-direction:column;gap:0;margin-top:3rem;position:relative; }
+    .exp-timeline::before { content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,var(--accent),var(--accent2),transparent); }
+    .exp-item { padding:2.5rem 0 2.5rem 3rem;border-bottom:1px solid var(--border);position:relative;opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease; }
+    .exp-item.visible { opacity:1;transform:translateY(0); }
+    .exp-item::before { content:'';position:absolute;left:-4px;top:3rem;width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent); }
+    .exp-header { display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.5rem; }
+    .exp-company { font-family:'Syne',sans-serif;font-weight:700;font-size:1.25rem; }
+    .exp-period { font-family:'DM Mono',monospace;font-size:0.73rem;color:var(--accent);padding:0.3rem 0.75rem;background:rgba(0,229,255,0.08);border:1px solid rgba(0,229,255,0.2); }
+    .exp-role { font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--muted);margin-bottom:1.25rem; }
+    .exp-bullets { list-style:none;display:flex;flex-direction:column;gap:0.6rem; }
+    .exp-bullets li { font-size:0.88rem;color:rgba(232,234,240,0.65);padding-left:1.25rem;position:relative;line-height:1.6; }
+    .exp-bullets li::before { content:'▸';position:absolute;left:0;color:var(--accent);font-size:0.7rem;top:0.25rem; }
+
+    /* SKILLS */
+    #skills { padding:7rem 3rem;max-width:1200px;margin:0 auto; }
+    .skills-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;margin-top:3rem; }
+    .skill-card { background:var(--card);border:1px solid var(--border);padding:1.75rem;position:relative;overflow:hidden;opacity:0;transform:translateY(20px);transition:opacity 0.5s,transform 0.5s,border-color 0.2s; }
+    .skill-card.visible { opacity:1;transform:translateY(0); }
+    .skill-card:hover { border-color:var(--accent); }
+    .skill-card::before { content:'';position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));transform:scaleX(0);transform-origin:left;transition:transform 0.3s; }
+    .skill-card:hover::before { transform:scaleX(1); }
+    .skill-card-icon { font-size:1.75rem;margin-bottom:1rem; }
+    .skill-card-title { font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;margin-bottom:1rem; }
+    .skill-tags { display:flex;flex-wrap:wrap;gap:0.4rem; }
+    .skill-tag { font-family:'DM Mono',monospace;font-size:0.68rem;padding:0.28rem 0.6rem;background:rgba(255,255,255,0.04);border:1px solid var(--border);color:var(--muted);transition:all 0.2s; }
+    .skill-card:hover .skill-tag { border-color:rgba(0,229,255,0.2);color:rgba(232,234,240,0.8); }
+
+    /* PROJECTS */
+    #projects { padding:7rem 3rem;background:var(--bg2); }
+    .proj-inner { max-width:1200px;margin:0 auto; }
+    .proj-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1.5rem;margin-top:3rem; }
+    .proj-card { background:var(--card);border:1px solid var(--border);padding:2rem;position:relative;overflow:hidden;opacity:0;transform:translateY(20px);transition:opacity 0.5s,transform 0.5s,border-color 0.2s; }
+    .proj-card.visible { opacity:1;transform:translateY(0); }
+    .proj-card:hover { border-color:rgba(124,92,252,0.4); }
+    .proj-card::after { content:'';position:absolute;bottom:0;left:0;width:100%;height:1px;background:linear-gradient(90deg,var(--accent2),transparent);transform:scaleX(0);transform-origin:left;transition:transform 0.4s; }
+    .proj-card:hover::after { transform:scaleX(1); }
+    .proj-number { font-family:'DM Mono',monospace;font-size:0.68rem;color:var(--accent2);letter-spacing:0.2em;margin-bottom:0.75rem; }
+    .proj-title { font-family:'Syne',sans-serif;font-weight:700;font-size:1.05rem;margin-bottom:0.2rem; }
+    .proj-company { font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--muted);margin-bottom:1rem; }
+    .proj-desc { font-size:0.83rem;color:rgba(232,234,240,0.6);line-height:1.65;margin-bottom:1.25rem; }
+    .proj-tags { display:flex;flex-wrap:wrap;gap:0.4rem; }
+    .proj-tag { font-family:'DM Mono',monospace;font-size:0.63rem;padding:0.25rem 0.55rem;background:rgba(124,92,252,0.1);border:1px solid rgba(124,92,252,0.2);color:var(--accent2); }
+
+    /* CONTACT */
+    #contact { padding:8rem 3rem;max-width:1200px;margin:0 auto;text-align:center; }
+    .contact-heading { font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.5rem,6vw,5rem);letter-spacing:-0.03em;line-height:1.1;margin-bottom:1.5rem; }
+    .contact-heading .stroke { color:transparent;-webkit-text-stroke:1px rgba(255,255,255,0.2); }
+    .contact-sub { font-size:1rem;color:var(--muted);max-width:480px;margin:0 auto 3rem;line-height:1.7; }
+    .contact-links { display:flex;gap:1rem;justify-content:center;flex-wrap:wrap; }
+    .contact-link { display:flex;align-items:center;gap:0.6rem;padding:0.75rem 1.5rem;border:1px solid var(--border);color:var(--muted);text-decoration:none;font-family:'DM Mono',monospace;font-size:0.75rem;letter-spacing:0.05em;transition:all 0.2s; }
+    .contact-link:hover { border-color:var(--accent);color:var(--accent);box-shadow:0 0 20px rgba(0,229,255,0.1); }
+    .contact-link svg { width:15px;height:15px; }
+    footer { padding:2rem 3rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--muted); }
+
+    @keyframes fadeUp { from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)} }
+    @keyframes fadeIn { from{opacity:0}to{opacity:1} }
+    @keyframes marquee { from{transform:translateX(0)}to{transform:translateX(-50%)} }
+    @keyframes pulse-dot { 0%,100%{opacity:1}50%{opacity:0.4} }
+    @keyframes blink { 0%,80%,100%{opacity:0}40%{opacity:1} }
+
+    @media(max-width:900px){
+      .hero-inner{grid-template-columns:1fr;gap:2.5rem;}
+      .about-grid{grid-template-columns:1fr;gap:3rem;}
+      nav{padding:1rem 1.5rem;} .nav-links{display:none;}
+      #hero,#about,#skills,#contact{padding:5rem 1.5rem 3rem;}
+      #ai,#experience,#projects{padding:4rem 1.5rem;}
+      .proj-grid{grid-template-columns:1fr;}
+      footer{flex-direction:column;gap:0.5rem;text-align:center;}
+    }
+  </style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+<canvas id="particles-canvas"></canvas>
+<div class="grid-overlay"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<nav>
+  <a class="nav-logo" href="#hero">KP<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#ai">AI &amp; Agents</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <p class="hero-eyebrow">// AI &amp; Data Engineer · 5+ Years</p>
+      <h1 class="hero-name">Karri<br><span class="line2">Prasad</span></h1>
+      <p class="hero-title">AI Engineer &nbsp;|&nbsp; Data Engineer &nbsp;|&nbsp; <span class="hl">Cloud Data Architect</span> &nbsp;|&nbsp; <span style="color:var(--green)">DevOps</span></p>
+      <p class="hero-summary">AI Engineer &amp; Big Data / Cloud Engineer with 5+ years of experience designing scalable data platforms, building AI-powered pipelines, and deploying cloud-native solutions for healthcare, banking, and tech enterprise clients.</p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn-primary">View Projects</a>
+        <a href="#contact" class="btn-outline">Get in Touch</a>
+      </div>
+      <div class="hero-stats">
+        <div><div class="stat-value">5+</div><div class="stat-label">Years Experience</div></div>
+        <div><div class="stat-value">500M+</div><div class="stat-label">Records / Day</div></div>
+        <div><div class="stat-value">7</div><div class="stat-label">Cloud Certs</div></div>
+        <div><div class="stat-value">99.8%</div><div class="stat-label">Reliability</div></div>
+      </div>
+    </div>
+
+    <div class="avatar-card">
+      <div class="avatar-top">
+        <div class="avatar-visual">
+          <canvas class="avatar-canvas" id="avatar-canvas" width="72" height="72"></canvas>
+          <div class="avatar-status"></div>
+        </div>
+        <div>
+          <div class="avatar-name">Karri Prasad</div>
+          <div class="avatar-role">AI &amp; Data Engineer</div>
+          <div class="avatar-badge">AI Assistant Online</div>
+        </div>
+      </div>
+
+      <div class="chat-area" id="chat-area"></div>
+
+      <div class="quick-qs" id="quick-qs">
+        <button class="quick-q" onclick="askQ('What is your tech stack?')">🛠 Tech Stack</button>
+        <button class="quick-q" onclick="askQ('Tell me about your AI and agents experience')">🤖 AI Experience</button>
+        <button class="quick-q" onclick="askQ('What are your biggest achievements?')">🏆 Achievements</button>
+        <button class="quick-q" onclick="askQ('Are you open to new roles?')">💼 Availability</button>
+      </div>
+
+      <div class="chat-input-row">
+        <input class="chat-input" id="chat-input" placeholder="Ask me anything about Prasad..." onkeydown="if(event.key==='Enter')sendMsg()" />
+        <button class="chat-send" onclick="sendMsg()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#07080d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee-wrap"><div class="marquee-track" id="marquee-track"></div></div>
+
+<section id="about">
+  <div class="section-label">01 / About</div>
+  <h2 class="section-title">Turning Raw Data Into<br>Strategic Assets</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I'm an AI and Big Data &amp; Cloud Engineer with 5+ years of experience designing scalable data platforms, building AI-powered pipelines, and deploying cloud-native solutions for healthcare, banking, and technology sectors.</p>
+      <p>I specialize in forward-deployed data and AI engineering — working directly with enterprise clients to understand their data challenges, architect GenAI and ML pipeline solutions, and deliver production-grade implementations using GCP (BigQuery, Dataflow, Pub/Sub, Cloud Composer), Python, and Spark. My work sits at the intersection of data engineering, artificial intelligence, and infrastructure automation.</p>
+      <p>At HCA Healthcare, I act as a forward-deployed engineer — embedded with the client to design and implement end-to-end GCP data pipelines, migrate legacy systems to cloud-native BigQuery architectures, and build AI-ready data layers for analytics and ML model consumption.</p>
+      <p style="margin-top:1.5rem">
+        <span style="font-family:'DM Mono',monospace;font-size:0.75rem;color:var(--accent)">📍</span>
+        <span style="font-family:'DM Mono',monospace;font-size:0.75rem;color:var(--muted);margin-left:0.4rem">Remote / Irving, TX</span>
+        &nbsp;&nbsp;
+        <span style="font-family:'DM Mono',monospace;font-size:0.75rem;color:var(--accent)">🎓</span>
+        <span style="font-family:'DM Mono',monospace;font-size:0.75rem;color:var(--muted);margin-left:0.4rem">M.S. Computer Information Systems — Florida Institute of Technology</span>
+      </p>
+    </div>
+    <div>
+      <div style="font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.15em;color:var(--muted);margin-bottom:1rem;text-transform:uppercase">Certifications</div>
+      <div class="cert-list">
+        <div class="cert-item"><div class="cert-icon">☸️</div><div><div class="cert-name">Certified Kubernetes Administrator (CKA)</div><div class="cert-meta">Linux Foundation</div></div></div>
+        <div class="cert-item"><div class="cert-icon">☁️</div><div><div class="cert-name">AWS Certified Solutions Architect – Associate</div><div class="cert-meta">July 2023 – July 2026</div></div></div>
+        <div class="cert-item"><div class="cert-icon">🔷</div><div><div class="cert-name">Azure Data Engineer Associate</div><div class="cert-meta">March 2024</div></div></div>
+        <div class="cert-item"><div class="cert-icon">⚡</div><div><div class="cert-name">Microsoft Certified: Azure Databricks Associate</div><div class="cert-meta">October 2024</div></div></div>
+        <div class="cert-item"><div class="cert-icon">❄️</div><div><div class="cert-name">Snowflake SnowPro Core Certification</div><div class="cert-meta">October 2024</div></div></div>
+        <div class="cert-item"><div class="cert-icon">📊</div><div><div class="cert-name">Certified Data Science Professional – DataCamp</div><div class="cert-meta">September 2023</div></div></div>
+        <div class="cert-item" style="border-left-color:var(--accent3)"><div class="cert-icon">🔶</div><div><div class="cert-name">Google Professional Data Engineer</div><div class="cert-meta" style="color:var(--accent3)">In Progress</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="ai">
+  <div class="ai-inner">
+    <div class="section-label">02 / AI &amp; Agents</div>
+    <h2 class="section-title">AI / ML &amp; Agent<br>Infrastructure</h2>
+    <div class="ai-grid">
+      <div class="ai-card">
+        <div class="ai-card-tag"><span class="dot"></span>LLM Pipeline</div>
+        <div class="ai-card-title">Clinical Data AI Pipeline</div>
+        <div class="ai-card-company">HCA Healthcare</div>
+        <div class="ai-card-desc">Designed and built vector embedding pipelines for clinical notes and structured EHR data, enabling semantic search and LLM-based clinical decision support. Integrated BigQuery ML for in-database ML inference on 500M+ daily records, reducing data movement overhead for AI workloads significantly.</div>
+        <div class="ai-card-stack"><span class="ai-tag">BigQuery ML</span><span class="ai-tag">Vertex AI</span><span class="ai-tag">Embeddings</span><span class="ai-tag">LLM</span><span class="ai-tag">Python</span></div>
+      </div>
+      <div class="ai-card">
+        <div class="ai-card-tag"><span class="dot"></span>Data Agent</div>
+        <div class="ai-card-title">Intelligent Data Quality Agent</div>
+        <div class="ai-card-company">HCA Healthcare</div>
+        <div class="ai-card-desc">Built an autonomous data quality agent using LangChain and Python that monitors pipeline health, automatically diagnoses anomalies in clinical data feeds, generates root-cause analysis reports, and triggers self-healing workflows — reducing manual triage time by 80%.</div>
+        <div class="ai-card-stack"><span class="ai-tag">LangChain</span><span class="ai-tag">Vertex AI</span><span class="ai-tag">Great Expectations</span><span class="ai-tag">Python</span><span class="ai-tag">Airflow</span></div>
+      </div>
+      <div class="ai-card">
+        <div class="ai-card-tag"><span class="dot"></span>ML Infrastructure</div>
+        <div class="ai-card-title">ML Feature Store &amp; Training Pipeline</div>
+        <div class="ai-card-company">Citi</div>
+        <div class="ai-card-desc">Architected a centralized ML feature store on GCP using Vertex AI Feature Store, building automated feature ingestion pipelines from BigQuery curated datasets. Enabled 10+ ML models with consistent, versioned features for fraud detection and credit risk scoring.</div>
+        <div class="ai-card-stack"><span class="ai-tag">Vertex AI</span><span class="ai-tag">Feature Store</span><span class="ai-tag">BigQuery</span><span class="ai-tag">Dataflow</span><span class="ai-tag">MLOps</span></div>
+      </div>
+      <div class="ai-card">
+        <div class="ai-card-tag"><span class="dot"></span>Agentic AI</div>
+        <div class="ai-card-title">NL-to-SQL Data Discovery Agent</div>
+        <div class="ai-card-company">Citi</div>
+        <div class="ai-card-desc">Developed a natural language query agent using RAG over BigQuery schema metadata, enabling business analysts to query data products in plain English. Used Gemini + LangChain, reducing analyst SQL development time by 70% for non-technical teams.</div>
+        <div class="ai-card-stack"><span class="ai-tag">RAG</span><span class="ai-tag">LangChain</span><span class="ai-tag">BigQuery</span><span class="ai-tag">Gemini</span><span class="ai-tag">Python</span></div>
+      </div>
+      <div class="ai-card">
+        <div class="ai-card-tag"><span class="dot"></span>AI Ops</div>
+        <div class="ai-card-title">Automated Incident Response Agent</div>
+        <div class="ai-card-company">HCA Healthcare</div>
+        <div class="ai-card-desc">Deployed an AI-driven ops agent integrated with PagerDuty and Cloud Monitoring that classifies pipeline incidents, fetches relevant logs and runbooks, and proposes remediation steps — cutting mean time to resolve from 45 minutes to under 10 minutes.</div>
+        <div class="ai-card-stack"><span class="ai-tag">Gemini</span><span class="ai-tag">PagerDuty</span><span class="ai-tag">Cloud Monitoring</span><span class="ai-tag">LangChain</span><span class="ai-tag">Python</span></div>
+      </div>
+      <div class="ai-card">
+        <div class="ai-card-tag"><span class="dot"></span>Generative AI</div>
+        <div class="ai-card-title">LLM-Powered Data Documentation</div>
+        <div class="ai-card-company">Personal Project</div>
+        <div class="ai-card-desc">Built a generative AI tool that automatically produces data catalog documentation, column-level descriptions, and lineage narratives for BigQuery tables by analyzing schema metadata — integrated into CI/CD for zero-maintenance documentation.</div>
+        <div class="ai-card-stack"><span class="ai-tag">Gemini</span><span class="ai-tag">BigQuery</span><span class="ai-tag">GitHub Actions</span><span class="ai-tag">Dataplex</span><span class="ai-tag">Python</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="exp-inner">
+    <div class="section-label">03 / Experience</div>
+    <h2 class="section-title">Where I've Worked</h2>
+    <div class="exp-timeline">
+      <div class="exp-item">
+        <div class="exp-header"><div class="exp-company">HCA Healthcare</div><div class="exp-period">June 2025 – Present</div></div>
+        <div class="exp-role">Embedded AI Engineering Lead &amp; Senior Data Engineer · Remote</div>
+        <ul class="exp-bullets">
+          <li>Embedded AI engineering lead across multiple hospital divisions, running discovery sessions with clinical ops teams, and translating real workflow problems into LLM-powered solutions that run in production</li>
+          <li>Designed and deployed a LangGraph-based agentic workflow that autonomously triages clinical data requests, routes to downstream systems, and escalates edge cases — eliminating a 2-day manual process; approved for full rollout after a live leadership walkthrough</li>
+          <li>Built a RAG-based schema intelligence system on BigQuery using Pinecone + LangChain, enabling clinical analysts to self-serve data discovery without needing a data engineer</li>
+          <li>Led adoption of GCP Lakehouse architecture (Delta Lake over GCS), replacing siloed zones with a unified layer for both pipelines and LLM agents</li>
+          <li>Fine-tuned a clinical NLP model using LoRA/PEFT for structured field extraction from clinical notes — 34% accuracy improvement; deployed on Cloud Run via Kubernetes with automated retraining on data drift</li>
+          <li>Built high-throughput batch and streaming ingestion pipelines (Cloud Dataflow, Pub/Sub, Debezium CDC), processing 500M records/day into GCS</li>
+          <li>Developed BigQuery curated layers with partitioned/clustered tables — reducing query costs by 45% and query development effort by 60%</li>
+          <li>Orchestrated all workflows in Cloud Composer (Airflow) — 99.7% pipeline reliability</li>
+          <li>Enforced HIPAA-aligned column-level security, row-level access policies, and data quality validation via Great Expectations</li>
+          <li>Provisioned all infrastructure via Terraform across dev, staging, and production</li>
+        </ul>
+      </div>
+      <div class="exp-item">
+        <div class="exp-header"><div class="exp-company">Citi</div><div class="exp-period">July 2023 – May 2025</div></div>
+        <div class="exp-role">Data Engineer – Cloud Data Lake &amp; Platform Operations · Irving, TX</div>
+        <ul class="exp-bullets">
+          <li>GCP and Azure Data Lake architectures for financial workloads — 38% storage cost savings; SOX regulatory compliance</li>
+          <li>Replaced 6-hour batch loads with CDC-based ingestion (Debezium + Pub/Sub): 92% ingestion window reduction (6hrs to 30 min)</li>
+          <li>Architected Vertex AI Feature Store enabling 10+ ML models (fraud detection, credit risk); built NL-to-SQL RAG agent cutting analyst SQL dev time 70%</li>
+          <li>Led Hadoop/HDFS to GCP migration: 65% processing time reduction, full decommission; Great Expectations framework at 99.8% accuracy across 150+ financial feeds</li>
+        </ul>
+      </div>
+      <div class="exp-item">
+        <div class="exp-header"><div class="exp-company">Accenture</div><div class="exp-period">August 2020 – January 2022</div></div>
+        <div class="exp-role">Data Engineer – Cloud &amp; Big Data Platform · Bengaluru, India</div>
+        <ul class="exp-bullets">
+          <li>AWS S3 and Azure ADLS Data Lake operations — lifecycle policies, IAM/RBAC access controls across client environments</li>
+          <li>PySpark batch ingestion on Hadoop/HDFS clusters; 55% processing reduction via watermark-based incremental ingestion</li>
+          <li>Jenkins CI/CD pipelines for automated deployments; 24/7 on-call rotation maintaining 99.9% SLA</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="section-label">04 / Skills</div>
+  <h2 class="section-title">Technical Toolkit</h2>
+  <div class="skills-grid">
+    <div class="skill-card"><div class="skill-card-icon">☁️</div><div class="skill-card-title">Cloud Platforms</div><div class="skill-tags"><span class="skill-tag">GCP</span><span class="skill-tag">AWS</span><span class="skill-tag">Azure</span><span class="skill-tag">GCS · S3 · ADLS</span><span class="skill-tag">Cloud Migration</span><span class="skill-tag">Data Lake Architecture</span></div></div>
+    <div class="skill-card"><div class="skill-card-icon">🤖</div><div class="skill-card-title">AI / ML &amp; Agents</div><div class="skill-tags"><span class="skill-tag">Vertex AI</span><span class="skill-tag">BigQuery ML</span><span class="skill-tag">LangChain</span><span class="skill-tag">RAG</span><span class="skill-tag">Gemini</span><span class="skill-tag">LLM Pipelines</span><span class="skill-tag">MLOps</span><span class="skill-tag">Feature Store</span></div></div>
+    <div class="skill-card"><div class="skill-card-icon">🔗</div><div class="skill-card-title">Data Pipelines</div><div class="skill-tags"><span class="skill-tag">Cloud Dataflow</span><span class="skill-tag">Apache Beam</span><span class="skill-tag">PySpark</span><span class="skill-tag">Pub/Sub</span><span class="skill-tag">Kafka</span><span class="skill-tag">Apache Airflow</span><span class="skill-tag">Debezium CDC</span></div></div>
+    <div class="skill-card"><div class="skill-card-icon">💻</div><div class="skill-card-title">Programming</div><div class="skill-tags"><span class="skill-tag">Python (Expert)</span><span class="skill-tag">SQL / BigQuery SQL</span><span class="skill-tag">PySpark / Scala</span><span class="skill-tag">Shell / Bash</span><span class="skill-tag">REST API</span><span class="skill-tag">T-SQL</span></div></div>
+    <div class="skill-card"><div class="skill-card-icon">🗄️</div><div class="skill-card-title">Data &amp; Warehousing</div><div class="skill-tags"><span class="skill-tag">BigQuery</span><span class="skill-tag">Snowflake</span><span class="skill-tag">Delta Lake</span><span class="skill-tag">Iceberg</span><span class="skill-tag">Parquet · Avro · ORC</span><span class="skill-tag">SQL Server · Oracle</span></div></div>
+    <div class="skill-card"><div class="skill-card-icon">⚙️</div><div class="skill-card-title">DevOps &amp; Infra</div><div class="skill-tags"><span class="skill-tag">Terraform</span><span class="skill-tag">Azure DevOps</span><span class="skill-tag">Jenkins</span><span class="skill-tag">GitHub Actions</span><span class="skill-tag">Docker</span><span class="skill-tag">HIPAA · SOX</span><span class="skill-tag">PagerDuty</span></div></div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="proj-inner">
+    <div class="section-label">05 / Projects</div>
+    <h2 class="section-title">Key Deliverables</h2>
+    <div class="proj-grid">
+      <div class="proj-card"><div class="proj-number">PROJECT_01</div><div class="proj-title">Enterprise GCP Cloud Data Lake</div><div class="proj-company">HCA Healthcare</div><div class="proj-desc">Enterprise-grade GCP Data Lake with multi-zone GCS hierarchy, IAM governance for 200+ principals across 20+ projects, VPC Service Controls, and full HIPAA compliance — reducing storage costs by 40%.</div><div class="proj-tags"><span class="proj-tag">GCP</span><span class="proj-tag">BigQuery</span><span class="proj-tag">Terraform</span><span class="proj-tag">HIPAA</span></div></div>
+      <div class="proj-card"><div class="proj-number">PROJECT_02</div><div class="proj-title">Real-Time CDC Streaming Pipeline</div><div class="proj-company">HCA Healthcare</div><div class="proj-desc">End-to-end streaming architecture capturing 50M+ daily clinical CDC events via Debezium + Cloud Pub/Sub, Avro schema registry, and exactly-once Dataflow write semantics into BigQuery.</div><div class="proj-tags"><span class="proj-tag">Pub/Sub</span><span class="proj-tag">Dataflow</span><span class="proj-tag">Debezium</span><span class="proj-tag">Avro</span></div></div>
+      <div class="proj-card"><div class="proj-number">PROJECT_03</div><div class="proj-title">Intelligent Data Quality Agent</div><div class="proj-company">HCA Healthcare</div><div class="proj-desc">LangChain + Vertex AI autonomous agent that monitors pipeline health, auto-diagnoses anomalies, generates root-cause analysis, and triggers self-healing workflows — 80% triage time reduction.</div><div class="proj-tags"><span class="proj-tag">LangChain</span><span class="proj-tag">Vertex AI</span><span class="proj-tag">AI Agents</span><span class="proj-tag">Python</span></div></div>
+      <div class="proj-card"><div class="proj-number">PROJECT_04</div><div class="proj-title">NL-to-SQL Discovery Agent</div><div class="proj-company">Citi</div><div class="proj-desc">RAG-based NL query agent over BigQuery schema metadata using Gemini + LangChain. Enables plain-English queries by business analysts — cutting SQL dev time 70% for non-technical users.</div><div class="proj-tags"><span class="proj-tag">RAG</span><span class="proj-tag">LangChain</span><span class="proj-tag">Gemini</span><span class="proj-tag">BigQuery</span></div></div>
+      <div class="proj-card"><div class="proj-number">PROJECT_05</div><div class="proj-title">ML Feature Store Platform</div><div class="proj-company">Citi</div><div class="proj-desc">Centralized Vertex AI Feature Store with automated BigQuery ingestion, enabling 10+ ML models (fraud detection, credit risk scoring) with consistent, versioned features and full MLOps workflows.</div><div class="proj-tags"><span class="proj-tag">Vertex AI</span><span class="proj-tag">Feature Store</span><span class="proj-tag">MLOps</span><span class="proj-tag">BigQuery</span></div></div>
+      <div class="proj-card"><div class="proj-number">PROJECT_06</div><div class="proj-title">Hadoop to GCP Migration</div><div class="proj-company">Citi</div><div class="proj-desc">Full Hadoop/HDFS to GCP migration: Hive HQL rewritten as BigQuery SQL, MapReduce re-engineered as Dataflow. Achieved 65% processing time reduction and full on-premise decommission.</div><div class="proj-tags"><span class="proj-tag">Migration</span><span class="proj-tag">BigQuery</span><span class="proj-tag">Dataflow</span><span class="proj-tag">GCP</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="section-label">06 / Contact</div>
+  <h2 class="contact-heading">Let's Build<br><span class="stroke">Something</span><br>Together</h2>
+  <p class="contact-sub">Open to senior data engineering, AI/ML infrastructure, cloud platform consulting, and interesting data architecture challenges.</p>
+  <div class="contact-links">
+    <a href="mailto:ksprasadmvsa.1999@gmail.com" class="contact-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      ksprasadmvsa.1999@gmail.com
+    </a>
+    <a href="tel:+18176015406" class="contact-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.17 11.8 19.79 19.79 0 0 1 1.07 3.2 2 2 0 0 1 3.04 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 5.62 5.62l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 15.92z"/></svg>
+      +1 817-601-5406
+    </a>
+    <a href="https://linkedin.com/in/karri-prasad-293374293" target="_blank" rel="noopener" class="contact-link">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      LinkedIn
+    </a>
+    <a href="https://github.com/shyam-karri" target="_blank" rel="noopener" class="contact-link">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+      GitHub
+    </a>
+  </div>
+</section>
+
+<footer>
+  <span>© 2025 Karri Prasad</span>
+  <span>AI &amp; Data Engineer · Cloud Data Architect · DevOps</span>
+  <span style="color:var(--accent)">Built with ♥</span>
+</footer>
+
+<script>
+// CURSOR
+const cursor=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+function animateCursor(){cursor.style.left=mx+'px';cursor.style.top=my+'px';rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animateCursor);}
+animateCursor();
+document.querySelectorAll('a,button,input').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ring.style.width='54px';ring.style.height='54px';ring.style.borderColor='rgba(0,229,255,0.8)';});
+  el.addEventListener('mouseleave',()=>{ring.style.width='36px';ring.style.height='36px';ring.style.borderColor='rgba(0,229,255,0.5)';});
+});
+
+// PARTICLES
+const cvs=document.getElementById('particles-canvas'),c=cvs.getContext('2d');
+let W,H,pts=[];
+function resize(){W=cvs.width=innerWidth;H=cvs.height=innerHeight;}
+resize();window.addEventListener('resize',resize);
+class P{constructor(){this.reset();}reset(){this.x=Math.random()*W;this.y=Math.random()*H;this.vx=(Math.random()-.5)*.3;this.vy=(Math.random()-.5)*.3;this.r=Math.random()*1.5+.3;this.a=Math.random()*.4+.1;}update(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>W||this.y<0||this.y>H)this.reset();}draw(){c.beginPath();c.arc(this.x,this.y,this.r,0,Math.PI*2);c.fillStyle=`rgba(0,229,255,${this.a})`;c.fill();}}
+for(let i=0;i<80;i++)pts.push(new P());
+function drawPts(){c.clearRect(0,0,W,H);pts.forEach(p=>{p.update();p.draw();});for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<120){c.beginPath();c.moveTo(pts[i].x,pts[i].y);c.lineTo(pts[j].x,pts[j].y);c.strokeStyle=`rgba(0,229,255,${.04*(1-d/120)})`;c.lineWidth=.5;c.stroke();}}requestAnimationFrame(drawPts);}
+drawPts();
+
+// AVATAR ANIMATION
+const av=document.getElementById('avatar-canvas'),ac=av.getContext('2d');
+let t=0;
+const nodes=Array.from({length:8},(_,i)=>({angle:(i/8)*Math.PI*2,r:22+Math.random()*8,speed:.008+Math.random()*.012,off:Math.random()*Math.PI*2,color:i%3===0?'#00e5ff':i%3===1?'#7c5cfc':'#00ff88'}));
+function drawAvatar(){
+  ac.clearRect(0,0,72,72);
+  const cx=36,cy=36;
+  const g=ac.createRadialGradient(cx,cy,4,cx,cy,32);g.addColorStop(0,'#1a0c3a');g.addColorStop(1,'#070a14');
+  ac.beginPath();ac.arc(cx,cy,34,0,Math.PI*2);ac.fillStyle=g;ac.fill();
+  ac.beginPath();ac.arc(cx,cy,20,0,Math.PI*2);ac.strokeStyle='rgba(0,229,255,0.15)';ac.lineWidth=.5;ac.stroke();
+  nodes.forEach(n=>{
+    const a=n.angle+t*n.speed+n.off,nx=cx+Math.cos(a)*n.r,ny=cy+Math.sin(a)*n.r;
+    ac.beginPath();ac.arc(nx,ny,1.8,0,Math.PI*2);ac.fillStyle=n.color;ac.fill();
+    ac.beginPath();ac.moveTo(cx,cy);ac.lineTo(nx,ny);
+    const col=n.color==='#00e5ff'?'rgba(0,229,255,0.12)':n.color==='#7c5cfc'?'rgba(124,92,252,0.12)':'rgba(0,255,136,0.12)';
+    ac.strokeStyle=col;ac.lineWidth=.4;ac.stroke();
+  });
+  ac.font='bold 14px Syne,sans-serif';ac.textAlign='center';ac.textBaseline='middle';ac.fillStyle='rgba(255,255,255,0.92)';ac.fillText('KP',cx,cy);
+  const pr=(Math.sin(t*.05)+1)*3+10;ac.beginPath();ac.arc(cx,cy,pr,0,Math.PI*2);ac.strokeStyle=`rgba(0,229,255,${Math.max(0,.15-pr*.007)})`;ac.lineWidth=.5;ac.stroke();
+  t++;requestAnimationFrame(drawAvatar);
+}
+drawAvatar();
+
+// MARQUEE
+const mItems=['Python','PySpark','SQL','BigQuery','Cloud Dataflow','Apache Beam','Pub/Sub','Kafka','Debezium CDC','Terraform','Kubernetes','Apache Airflow','Vertex AI','LangChain','LangGraph','RAG','Gemini','Feature Store','Delta Lake','Snowflake','GCP','AWS','Azure','MLOps'];
+const mTrack=document.getElementById('marquee-track');
+mTrack.innerHTML=(mItems.map(i=>`<span class="marquee-item"><span class="dot"></span>${i}</span>`).join('')).repeat(2);
+
+// SCROLL REVEAL
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:.1});
+document.querySelectorAll('.exp-item,.skill-card,.proj-card,.ai-card').forEach((el,i)=>{el.style.transitionDelay=(i%6*.08)+'s';obs.observe(el);});
+
+// AI CHATBOT
+const CONTEXT=`You are an AI assistant for Karri Prasad's portfolio website. Answer questions about him warmly, concisely (2-4 sentences), professionally, in first person on his behalf.
+
+KARRI PRASAD - AI Engineer | Data Engineer | Cloud Data Architect | DevOps
+Email: ksprasadmvsa.1999@gmail.com | Phone: +1 817-601-5406
+LinkedIn: karri-prasad-293374293 | Location: Remote / Irving, TX
+
+EDUCATION: M.S. Computer Information Systems, Florida Institute of Technology (2023). B.E. Electronics & Communication Engineering, GITAM (2020).
+
+CURRENT: Embedded AI Engineering Lead & Senior Data Engineer @ HCA Healthcare (June 2025–Present, Remote)
+- Embedded AI engineering lead running discovery sessions with clinical ops teams, translating workflow problems into production LLM-powered solutions.
+- Designed LangGraph-based agentic workflow for clinical data requests routing & escalation, eliminating a 2-day manual process (approved for full rollout).
+- Built RAG-based schema intelligence system using Pinecone + LangChain for self-serve clinical data discovery.
+- Led adoption of GCP Lakehouse architecture (Delta Lake over GCS) for pipelines and LLM agents.
+- Fine-tuned clinical NLP model (LoRA/PEFT) for structured notes extraction (34% accuracy gain); deployed on Cloud Run/K8s with retraining.
+- High-throughput ingestion pipelines (Cloud Dataflow, Pub/Sub, Debezium CDC) processing 500M records/day.
+- BigQuery curated layers with partitioned/clustered tables, saving 45% cost and 60% dev effort.
+- Workflows orchestrated via Cloud Composer (Airflow) at 99.7% reliability.
+- HIPAA compliance, column/row-level security, data quality validation via Great Expectations, and Infrastructure as Code using Terraform.
+
+PREVIOUS: Data Engineer @ Citi (July 2023–May 2025, Irving TX)
+- GCP + Azure Data Lake, 38% storage savings, SOX compliance.
+- CDC ingestion: 6hrs → 30min (92% reduction) via Debezium + Pub/Sub.
+- Vertex AI Feature Store: 10+ ML models (fraud, credit risk).
+- NL-to-SQL RAG agent (LangChain + Gemini): 70% analyst time savings.
+- Hadoop → GCP migration: 65% processing time reduction.
+- Great Expectations: 99.8% accuracy across 150+ financial feeds.
+
+BEFORE: Data Engineer @ Accenture (Aug 2020–Jan 2022, Bengaluru)
+- AWS S3 + Azure ADLS operations.
+- PySpark on Hadoop/HDFS, terabyte-scale.
+- 55% load reduction via incremental ingestion.
+- 99.9% SLA via 24/7 on-call.
+
+CERTIFICATIONS: AWS Solutions Architect Associate, Azure Data Engineer Associate, Certified Kubernetes Administrator (CKA), Azure Databricks Associate, Snowflake SnowPro Core, DataCamp Data Science Professional, Google Professional Data Engineer (In Progress)
+
+KEY SKILLS: Python (Expert), PySpark, SQL/BigQuery, Terraform, Kubernetes (CKA), GCP/AWS/Azure, Dataflow, Pub/Sub, Kafka, Airflow, Debezium, Vertex AI, LangChain, LangGraph, RAG, Gemini, BigQuery ML, MLOps, Feature Store, Delta Lake, Iceberg, Docker, HIPAA/SOX, PagerDuty
+
+STATS: 500M+ records/day | 92% CDC improvement | 75% MTTD improvement | 65% Hadoop migration gain | 99.8% accuracy | 80% AI triage reduction | 5+ years experience | 7 professional certifications
+
+AVAILABILITY: Open to Data Engineer, AI Engineer, Forward Deployed Engineer, and Cloud Architect roles.`;
+
+const chatArea=document.getElementById('chat-area');
+function addMsg(text,isUser){const d=document.createElement('div');d.className='msg '+(isUser?'msg-user':'msg-ai');d.textContent=text;chatArea.appendChild(d);chatArea.scrollTop=chatArea.scrollHeight;}
+function showTyping(){const d=document.createElement('div');d.className='msg msg-ai';d.id='typing';d.innerHTML='<div class="typing-dots"><span></span><span></span><span></span></div>';chatArea.appendChild(d);chatArea.scrollTop=chatArea.scrollHeight;}
+function hideTyping(){const t=document.getElementById('typing');if(t)t.remove();}
+
+async function callClaude(q){
+  showTyping();
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:CONTEXT,messages:[{role:'user',content:q}]})});
+    const data=await res.json();
+    hideTyping();
+    const reply=(data.content&&data.content[0]&&data.content[0].text)||"Great question! Reach out directly at ksprasadmvsa.1999@gmail.com for more details.";
+    addMsg(reply,false);
+  }catch(e){hideTyping();addMsg("Feel free to reach out directly at ksprasadmvsa.1999@gmail.com — Prasad would love to connect!",false);}
+}
+
+function askQ(q){addMsg(q,true);callClaude(q);document.getElementById('quick-qs').style.display='none';}
+function sendMsg(){const inp=document.getElementById('chat-input'),v=inp.value.trim();if(!v)return;inp.value='';addMsg(v,true);callClaude(v);document.getElementById('quick-qs').style.display='none';}
+
+setTimeout(()=>addMsg("👋 Hi! I'm an AI assistant representing Prasad. Ask me about his experience, tech stack, AI projects, certifications, or whether he's available for new opportunities!",false),800);
+</script>
+</body>
+</html>
